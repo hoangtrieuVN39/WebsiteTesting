@@ -9,6 +9,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
+import java.util.Random;
+
 public class LoginTest {
     @BeforeMethod
     public void beforeMethod() {
@@ -174,25 +176,16 @@ public class LoginTest {
         lgp = homePage.gotoLoginPage();
         lgp.gotofwpwPage();
         lgp.Getemail("TVTHUYEN2003@gmail.com");
-//        String actualMsg = LoginPage.getlblLoginErrorMsg().getText();
-//        String expectedMsg = "There're errors in the form. Please correct the errors and try again.";
-//        Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
-//        lgp.login("due@gmail.com","","","");
-//        String actualMsg = Registerpage.getlblRegisterErrorMsg().getText();
-//        String expectedMsg = "There're errors in the form. Please correct the errors and try again.";
-//        Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
     }
     @Test
     public void TC13() {
-//        System.out.println("Errors display if password and confirm password don't match when resetting password");
-//        HomePage homePage = new HomePage();
-//        homePage.open();
-//        RegisterPage Registerpage = new RegisterPage();
-//        Registerpage = homePage.gotoRegisterPage();
-//        Registerpage.login("ytu@gmail.com","thql47k14","jgkg","2233445566");
-//        String actualMsg = Registerpage.getlblRegisterErrorMsg().getText();
-//        String expectedMsg = "There're errors in the form. Please correct the errors and try again.";
-//        Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
+        System.out.println("Errors display if password and confirm password don't match when resetting password");
+        HomePage homePage = new HomePage();
+        homePage.open();
+        LoginPage lgp = new LoginPage();
+        lgp = homePage.gotoLoginPage();
+        lgp.gotofwpwPage();
+        lgp.Getemail("TVTHUYEN2003@gmail.com");
     }
     @Test
     public void TC14() {
@@ -203,7 +196,9 @@ public class LoginTest {
         loginPage.login("tvt2003@gmail.com", "thuyen2003");
         BookTicketPage Btk = new BookTicketPage();
         Btk = homePage.gotoBookTicketPage();
-        Btk.book("1/3/2024","Sài Gòn","Huế","Hard bed","2");
+        Random random = new Random();
+        int randomDateindex = random.nextInt(28) + 3;
+        Btk.book(String.valueOf(randomDateindex),"Quãng Ngãi","Đà Nẵng","Hard bed","2");
         String actualMsg = Btk.getlblBookSuccessMsg().getText();
         String expectedMsg = "Ticket booked successfully!";
         Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
@@ -217,7 +212,6 @@ public class LoginTest {
         loginPage.login("tvt3005@gmail.com", "qwerty0987");
         TimetablePage ttp = new TimetablePage();
         ttp = homePage.gotoTimetablePage();
-        ttp.gotobookticketPage();
         ttp.gotobookticketPage();
     }
 }

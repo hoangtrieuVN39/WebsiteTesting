@@ -11,4 +11,5 @@ public class Constant {
     public static final String PID = "1023456789";
     public static final String RAILWAY_LOGIN_URL  = "http://railwayb1.somee.com/Account/Login.cshtml?ReturnUrl=/Page/BookTicketPage.cshtml";
     public static final String CONFIRM_URL = "http://railwayb1.somee.com/Account/Confirm?confirmationCode=1jC9hNbnmCiwNrDaKkkjNA%3d%3d";
+//    public static final String RAILWAY_BT_URL  = "http://railwayb1.somee.com/Page/BookTicketPage.cshtml?id1=5&id2=6";
 }
