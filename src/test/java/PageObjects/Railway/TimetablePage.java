@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class TimetablePage extends GeneralPage{
-    private final By tabbookticket =By.xpath("//*[@id=\"content\"]/div/div/table/tbody/tr[24]/td[7]/a");
+    private final By tabbookticket =By.xpath("//*[@id=\"content\"]/div/div/table/tbody/tr[2]/td[7]/a");
     public WebElement gettabbookticket(){
         return Constant.WEBDRIVER.findElement(tabbookticket);
     }
