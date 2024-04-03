@@ -2,6 +2,7 @@ package PageObjects.Railway;
 
 import Common.Constant.Constant;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -13,8 +14,18 @@ public class MyTicketPage extends GeneralPage{
         return Constant.WEBDRIVER.findElement(_txtTicket);
     }
     public void CancelTicket (String id) {
-        By btnCancel = By.xpath(btnCancel1+id+btnCancel2);
+        By btnCancel = By.xpath(btnCancel1 + id + btnCancel2);
         Constant.WEBDRIVER.findElement(btnCancel).click();
+    }
+    public boolean CheckCancel(String id){
+        By btnCancel = By.xpath(btnCancel1 + id + btnCancel2);
+        try {
+            Constant.WEBDRIVER.findElement(btnCancel);
+        }
+        catch(NoSuchElementException a) {
+            return true;
+        }
+        return false;
     }
 }
 

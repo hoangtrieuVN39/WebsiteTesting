@@ -1,6 +1,7 @@
 package Testcases.Railway;
 import Common.Common.Utilities;
 import PageObjects.Railway.*;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import Common.Constant.Constant;
@@ -116,7 +117,7 @@ public class LoginTest {
         homePage.open();
         RegisterPage Registerpage = new RegisterPage();
         Registerpage = homePage.gotoRegisterPage();
-        String actualMsg = Registerpage.login(Constant.EMAIL,Constant.password,Constant.CFpassword,Constant.PID).getWelcomeRegister();
+        String actualMsg = Registerpage.login(Constant.EMAIL,Constant.PASSWORD,Constant.CFpassword,Constant.PID).getWelcomeRegister();
         String expectedMsg = "Registration Confirmed! You can now log in to the site.";
         Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
     }
@@ -236,6 +237,7 @@ public class LoginTest {
         homePage.open();
         LoginPage loginPage = homePage.gotoLoginPage();
         loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+
         BookTicketPage Btk = new BookTicketPage();
         Btk = homePage.gotoBookTicketPage();
         Random random = new Random();
@@ -243,8 +245,10 @@ public class LoginTest {
         Btk = Btk.book(String.valueOf(randomDateindex),"Quãng Ngãi","Đà Nẵng","Hard bed","2");
         String url = Btk.getURL();
         String id = url.split("id=")[1];
+
         MyTicketPage Mtp = homePage.gotoMyTicketPage();
         Mtp.CancelTicket(id);
-
+        homePage.getAlert().accept();
+        Assert.assertTrue(Mtp.CheckCancel(id),"The canceled ticket is disappeared.");
     }
 }
