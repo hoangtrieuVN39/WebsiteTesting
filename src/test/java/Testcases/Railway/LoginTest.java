@@ -206,7 +206,7 @@ public class LoginTest {
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login("tvt2003@gmail.com", "thuyen2003");
+        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
         BookTicketPage Btk = new BookTicketPage();
         Btk = homePage.gotoBookTicketPage();
         Random random = new Random();
