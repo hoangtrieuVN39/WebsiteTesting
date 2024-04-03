@@ -3,9 +3,9 @@ import org.openqa.selenium.WebDriver;
 public class Constant {
     public static WebDriver WEBDRIVER;
     public static final String RAILWAY_URL = "http://railwayb1.somee.com/Page/HomePage.cshtml";
-    public static final String USERNAME = "TVTHUYEN2003@gmail.com";
-    public static final String PASSWORD = "thuyen3005";
-    public static final String EMAIL = "thuyen@gmail.com";
+    public static final String USERNAME = "tester2@gmail.come";
+    public static final String PASSWORD = "abcdef1234";
+    public static final String EMAIL = "tester2@gmail.com";
     public static final String password = "thuyen5003";
     public static final String CFpassword = "thuyen5003";
     public static final String PID = "1023456789";

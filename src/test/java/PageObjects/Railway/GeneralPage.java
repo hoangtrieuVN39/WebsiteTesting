@@ -4,7 +4,7 @@ import org.openqa.selenium.WebElement;
 import Common.Constant.Constant;
 public class GeneralPage {
     // Locators
-    private final By tabLogin = By.xpath("//*[@id=\"menu\"]/ul/li[8]/a");
+    private final By tabLogin = By.xpath("//*[@id=\"menu\"]/ul/li[8]/a/span");
     private final By tabBookTicket = By.xpath("//*[@id=\"menu\"]/ul/li[6]/a");
     private final By tabMyTicket = By.xpath("//*[@id=\"menu\"]/ul/li[7]/a");
     private final By tabChangePassword = By.xpath("//*[@id=\"menu\"]/ul/li[8]/a");
@@ -53,6 +53,7 @@ public class GeneralPage {
 
         return Constant.WEBDRIVER.findElement(tabTimetable);
     }
+
     // Methods
     public String getWelcomeMessage()
     {
@@ -94,6 +95,9 @@ public class GeneralPage {
     public TimetablePage gotoTimetablePage() {
         this.getTabTimetable().click();
         return new TimetablePage();
+    }
+    public String getURL(){
+        return Constant.WEBDRIVER.getCurrentUrl();
     }
 
 }

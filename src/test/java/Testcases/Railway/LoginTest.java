@@ -1,4 +1,5 @@
 package Testcases.Railway;
+import Common.Common.Utilities;
 import PageObjects.Railway.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,14 +10,16 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
+import java.io.Console;
 import java.util.Random;
 
 public class LoginTest {
     @BeforeMethod
     public void beforeMethod() {
         System.out.println("Pre-condition");
+        System.setProperty("webdriver.edge.driver", "Executables/msedgedriver.exe");
         Constant.WEBDRIVER = new EdgeDriver();
-        Constant.WEBDRIVER.manage().window().maximize();
+        Constant.WEBDRIVER.manage();
     }
 
     @AfterMethod
@@ -35,6 +38,7 @@ public class LoginTest {
         String expectedMsg = "Welcome " + Constant.USERNAME;
         Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
     }
+
     @Test
     public void TC02() {
         System.out.println("User can't login with blank 'Username' textbox");
@@ -46,6 +50,7 @@ public class LoginTest {
         String expectedErrorMsg = "There was a problem with your login and/or errors exist in your form.";
         Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message is not displayed as expected");
     }
+
     @Test
     public void TC03() {
         System.out.println("User can't login with blank 'Username' textbox");
@@ -57,6 +62,7 @@ public class LoginTest {
         String expectedErrorMsg = "There was a problem with your login and/or errors exist in your form.";
         Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message is not displayed as expected");
     }
+
     @Test
     public void TC04() {
         System.out.println("Login page displays when un-logged User clicks on Book ticket");
@@ -64,17 +70,18 @@ public class LoginTest {
         homePage.open();
         BookTicketPage bookPage = new BookTicketPage();
         bookPage = homePage.gotoBookTicketPage();
-        String actualURL = bookPage.getCurrentPage();
+        String actualURL = bookPage.getURL();
         String expectedURL = Constant.RAILWAY_LOGIN_URL;
         Assert.assertEquals(actualURL, expectedURL, "Error message is not displayed as expected");
     }
+
     @Test
     public void TC05() {
         System.out.println("TC05 - System shows message when user enters wrong password several times");
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage loginPage = homePage.gotoLoginPage();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             loginPage.login(Constant.USERNAME, "invalidPassword");
         }
         loginPage.login(Constant.USERNAME, "invalidPassword");
@@ -82,6 +89,7 @@ public class LoginTest {
         String expectedErrorMsg = "You have used 4 out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes.";
         Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message is not displayed as expected");
     }
+
     @Test
     public void TC06() {
         System.out.println("Additional pages display once user logged in");
@@ -100,6 +108,7 @@ public class LoginTest {
         String expectedMsgCP = "Change password";
         Assert.assertEquals(actualMsgCP, expectedMsgCP, "Welcome message is not displayed as expected");
     }
+
     @Test
     public void TC07() {
         System.out.println("User can create new account");
@@ -111,6 +120,7 @@ public class LoginTest {
         String expectedMsg = "Registration Confirmed! You can now log in to the site.";
         Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
     }
+
     @Test
     public void TC08() {
         System.out.println("User can't login with an account hasn't been activated");
@@ -122,20 +132,22 @@ public class LoginTest {
         String expectedErrorMsg = "Invalid username or password. Please try again.";
         Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message is not displayed as expected");
     }
+
     @Test
     public void TC09() {
         System.out.println("User can change password");
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage LoginPage = homePage.gotoLoginPage();
-        LoginPage.login("tvt3005@gmail.com", "qwerty1234");
+        LoginPage.login(Constant.USERNAME, Constant.PASSWORD);
         ChangePasswordPage  CPPage = new ChangePasswordPage();
         CPPage = homePage.gotoChangePasswordPage();
-        CPPage.change("qwerty1234","qwerty0987","qwerty0987");
+        CPPage.change(Constant.PASSWORD, Constant.PASSWORD, Constant.PASSWORD);
         String actualMsg = CPPage.getlblCPSuccessMsg().getText();
         String expectedMsg = "Your password has been updated!";
         Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
     }
+
     @Test
     public void TC10() {
         System.out.println("User can't create account with Confirm password is not the same with Password");
@@ -209,11 +221,30 @@ public class LoginTest {
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login("tvt3005@gmail.com", "qwerty0987");
-        TimetablePage ttp = new TimetablePage();
-        ttp = homePage.gotoTimetablePage();
-        ttp.gotobookticketPage();
+        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+        TimetablePage ttp = homePage.gotoTimetablePage();
+        BookTicketPage btp = ttp.gotobookticketPage("Huế", "Sài Gòn");
+        String depart = btp.getselDepartfromvalue().getText();
+        String arrive = btp.getselArrivevalue().getText();
+        Assert.assertEquals(depart, "Huế", "Depart location is not displayed as expected");
+        Assert.assertEquals(arrive, "Sài Gòn", "Arrive location is not displayed as expected");
+    }
+    @Test
+    public void TC16() {
+        System.out.println("User can open \"Book ticket\" page by clicking on \"Book ticket\" link in \"Train timetable\" page");
+        HomePage homePage = new HomePage();
+        homePage.open();
+        LoginPage loginPage = homePage.gotoLoginPage();
+        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+        BookTicketPage Btk = new BookTicketPage();
+        Btk = homePage.gotoBookTicketPage();
+        Random random = new Random();
+        int randomDateindex = random.nextInt(28) + 3;
+        Btk = Btk.book(String.valueOf(randomDateindex),"Quãng Ngãi","Đà Nẵng","Hard bed","2");
+        String url = Btk.getURL();
+        String id = url.split("id=")[1];
+        MyTicketPage Mtp = homePage.gotoMyTicketPage();
+        Mtp.CancelTicket(id);
+
     }
 }
-
-
