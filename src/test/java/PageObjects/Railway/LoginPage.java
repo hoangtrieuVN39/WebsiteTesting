@@ -15,12 +15,16 @@ public class LoginPage extends GeneralPage{
     private final By _lblLoginErrorMsg = By.xpath("//p[@class='message error LoginForm']");
     private final By _txtEmailAddress = By.xpath("//*[@id=\"email\"]");
     private final By _btnSendIn = By.xpath("//*[@id=\"content\"]/form/fieldset/p[2]/input");
+    private final By _txtmesresetpw = By.xpath("/html/body/span/h1");
     // Elements
     public WebElement getTxtUsername()
     {
         return Constant.WEBDRIVER.findElement(_txtUsername);
     }
-
+    public WebElement getTxtresetpw()
+    {
+        return Constant.WEBDRIVER.findElement(_txtmesresetpw);
+    }
     public WebElement getTxtPassword()
     {
 

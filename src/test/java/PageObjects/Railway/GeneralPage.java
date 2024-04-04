@@ -1,6 +1,7 @@
 package PageObjects.Railway;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebElement;
 import Common.Constant.Constant;
 public class GeneralPage {

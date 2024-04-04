@@ -27,6 +27,10 @@ public class BookTicketPage extends GeneralPage{
     }
     public WebElement getselDepartfromvalue(){ return Constant.WEBDRIVER.findElement(_selDepartfromvalue); }
     public WebElement getselArrivevalue(){ return Constant.WEBDRIVER.findElement(_selArrivevalue); }
+    public  String getCurrentPage(){
+        Url_Login_Page = Constant.WEBDRIVER.getCurrentUrl();
+        return Url_Login_Page;
+    }
 
     public WebElement getselArrive(){
         return Constant.WEBDRIVER.findElement(_selArrive);
@@ -45,6 +49,7 @@ public class BookTicketPage extends GeneralPage{
     {
         return Constant.WEBDRIVER.findElement(_lblBookSuccessMsg);
     }
+
     public BookTicketPage book(String Datepart, String Departfrom, String Arriveat, String Seattype, String ticketamt) {
         this.getselDatepart().sendKeys(Datepart);
         this.getselDepartfrom().sendKeys(Departfrom);
