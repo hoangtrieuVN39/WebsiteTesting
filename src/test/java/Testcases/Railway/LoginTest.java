@@ -19,13 +19,13 @@ public class LoginTest {
         System.out.println("Pre-condition");
         System.setProperty("webdriver.edge.driver", "Executables/msedgedriver.exe");
         Constant.WEBDRIVER = new EdgeDriver();
-        Constant.WEBDRIVER.manage();
+        Constant.WEBDRIVER.manage().window().minimize();
     }
 
     @AfterMethod
     public void afterMethod() {
         System.out.println("Post-condition");
-//        Constant.WEBDRIVER.quit();
+        Constant.WEBDRIVER.quit();
     }
 
     @Test
@@ -34,8 +34,8 @@ public class LoginTest {
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage loginPage = homePage.gotoLoginPage();
-        String actualMsg = loginPage.login(Constant.USERNAME, Constant.PASSWORD).getWelcomeMessage();
-        String expectedMsg = "Welcome " + Constant.USERNAME;
+        String actualMsg = loginPage.login(Constant.EMAIL, Constant.PASSWORD).getWelcomeMessage();
+        String expectedMsg = "Welcome " + Constant.EMAIL;
         Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
     }
 
@@ -57,7 +57,7 @@ public class LoginTest {
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage LoginPage = homePage.gotoLoginPage();
-        LoginPage.login("", Constant.USERNAME);
+        LoginPage.login("", Constant.EMAIL);
         String actualErrorMsg = LoginPage.getlblLoginErrorMsg().getText();
         String expectedErrorMsg = "There was a problem with your login and/or errors exist in your form.";
         Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message is not displayed as expected");
@@ -82,9 +82,9 @@ public class LoginTest {
         homePage.open();
         LoginPage loginPage = homePage.gotoLoginPage();
         for (int i = 0; i < 5; i++) {
-            loginPage.login(Constant.USERNAME, "invalidPassword");
+            loginPage.login(Constant.EMAIL, "invalidPassword");
         }
-        loginPage.login(Constant.USERNAME, "invalidPassword");
+        loginPage.login(Constant.EMAIL, "invalidPassword");
         String actualErrorMsg = loginPage.getlblLoginErrorMsg().getText();
         String expectedErrorMsg = "You have used 4 out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes.";
         Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message is not displayed as expected");
@@ -96,14 +96,12 @@ public class LoginTest {
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(Constant.USERNAME, Constant.PASSWORD).getWelcomeMessage();
-        MyTicketPage ticketPage = new MyTicketPage();
-        ticketPage = homePage.gotoMyTicketPage();
+        loginPage.login(Constant.EMAIL, Constant.PASSWORD).getWelcomeMessage();
+        MyTicketPage ticketPage = homePage.gotoMyTicketPage();
         String actualMsgTicket = ticketPage.getMyTicketPage().getText();
-        String expectedMsgTicket = "Manage ticket";
+        String expectedMsgTicket = "Manage Tickets";
         Assert.assertEquals(actualMsgTicket, expectedMsgTicket, "Welcome message is not displayed as expected");
-        ChangePasswordPage  ChangePasswordPage = new ChangePasswordPage();
-        ChangePasswordPage = ticketPage.gotoChangePasswordPage();
+        ChangePasswordPage ChangePasswordPage = ticketPage.gotoChangePasswordPage();
         String actualMsgCP = ticketPage.getMyTicketPage().getText();
         String expectedMsgCP = "Change password";
         Assert.assertEquals(actualMsgCP, expectedMsgCP, "Welcome message is not displayed as expected");
@@ -114,11 +112,9 @@ public class LoginTest {
         System.out.println("User can create new account");
         HomePage homePage = new HomePage();
         homePage.open();
-        RegisterPage Registerpage = new RegisterPage();
-        Registerpage = homePage.gotoRegisterPage();
-        String actualMsg = Registerpage.login(Constant.EMAIL,Constant.password,Constant.CFpassword,Constant.PID).getWelcomeRegister();
+        RegisterPage Registerpage = homePage.gotoRegisterPage();
+        String actualMsg = Registerpage.login(Constant.EMAIL2,Constant.PASSWORD,Constant.PASSWORD,Constant.PID).getWelcomeRegister();
         String expectedMsg = "You're here";
-//        String expectedMsg = "Registration Confirmed! You can now log in to the site.";
         Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
     }
 
@@ -140,7 +136,7 @@ public class LoginTest {
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage LoginPage = homePage.gotoLoginPage();
-        LoginPage.login(Constant.USERNAME, Constant.PASSWORD);
+        LoginPage.login(Constant.EMAIL, Constant.PASSWORD);
         ChangePasswordPage  CPPage = new ChangePasswordPage();
         CPPage = homePage.gotoChangePasswordPage();
         CPPage.change(Constant.PASSWORD, Constant.PASSWORD, Constant.PASSWORD);
@@ -206,14 +202,14 @@ public class LoginTest {
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+        loginPage.login(Constant.EMAIL, Constant.PASSWORD);
         BookTicketPage Btk = new BookTicketPage();
         Btk = homePage.gotoBookTicketPage();
         Random random = new Random();
         int randomDateindex = random.nextInt(28) + 3;
         Btk.book(String.valueOf(randomDateindex),"Quãng Ngãi","Đà Nẵng","Hard bed","2");
         String actualMsg = Btk.getlblBookSuccessMsg().getText();
-        String expectedMsg = "Ticket booked successfully!";
+        String expectedMsg = "Ticket Booked Successfully!";
         Assert.assertEquals(actualMsg, expectedMsg, "Welcome message is not displayed as expected");
     }
     @Test
@@ -222,7 +218,7 @@ public class LoginTest {
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+        loginPage.login(Constant.EMAIL, Constant.PASSWORD);
         TimetablePage ttp = homePage.gotoTimetablePage();
         BookTicketPage btp = ttp.gotobookticketPage("Huế", "Sài Gòn");
         String depart = btp.getselDepartfromvalue().getText();
@@ -236,7 +232,7 @@ public class LoginTest {
         HomePage homePage = new HomePage();
         homePage.open();
         LoginPage loginPage = homePage.gotoLoginPage();
-        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+        loginPage.login(Constant.EMAIL, Constant.PASSWORD);
         BookTicketPage Btk = new BookTicketPage();
         Btk = homePage.gotoBookTicketPage();
         Random random = new Random();
